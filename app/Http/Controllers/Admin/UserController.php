@@ -28,7 +28,7 @@ class UserController extends Controller
 
 
 
-        
+
 
         $routeName = "users";
 
@@ -37,7 +37,7 @@ class UserController extends Controller
             "کد کاربری" , "نام"  ,  "شماره تلفن" ,"تاریخ عضویت" , "عملیات"
         ]    ;
 
-        
+
         return view('admin.pages.index', compact('items' , 'routeName' , 'headers'));
 
     }
@@ -246,4 +246,44 @@ class UserController extends Controller
         return view('user.history.index', compact('userAnsers', 'wins', 'user'));
 
     }
+
+
+    public function edtCompony(Request $request){
+
+
+        $user = Auth::user();
+
+
+
+
+        return view('user.compony.edit');
+
+
+    }
+
+
+    public function updateCompony(Request $request){
+
+        $request->validate([
+            'componyName'=>'required'
+        ]);
+
+
+        $user = Auth::user();
+
+
+        $user->update([
+           'componyName'=>$request->componyName
+        ]);
+
+
+
+        
+        session()->flash('edited', 'شرکت شما با موفقیت ورایش شد');
+
+        return redirect()->back();
+
+    }
+
+
 }

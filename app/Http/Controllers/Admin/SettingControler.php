@@ -23,18 +23,13 @@ class SettingControler extends Controller
 
         $payments = payment::OrderByDesc('id')->get();
 
-
         $todays = payment::whereDate('created_at', Carbon::today())->where('status', 1)->get();
 
-
         $all = payment::where('status', 1)->get();
-
 
         $allpays = 0;
         $allBuys = 0;
         $allpaysCount = 0;
-
-
 
         $todasyPay = 0;
         $todaysBuys = 0;
@@ -72,15 +67,17 @@ class SettingControler extends Controller
     public function edit(Request $request)
     {
 
-        $setting = QuestionPay::first();
+        $setting = setting::first();
 
         $setting->update([
 
-            'pay' => $request->pay
+            'searchEnginOncePay' => $request->searchEnginOncePay ,
+            'searchEnginMoreThanOne' => $request->searchEnginMoreThanOne ,
+
         ]);
 
 
-        session()->flash('edited', 'مبلغ سوال با موقیت تغییر کرد');
+        session()->flash('edited', 'مبلغ موتور جستجو با موقیت تغییر کرد');
         return redirect()->back();
 
     }

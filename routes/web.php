@@ -130,6 +130,15 @@ Route::prefix('/user-dashboard')
 
         Route::get('/', [UserController::class, 'dashboard'])->name('panel');
 
+
+        Route::prefix('/compony')->name('compony.')->group(function(){
+
+            Route::get('/', [UserController::class, 'edtCompony'])->name('edit');
+            Route::post('/update', [UserController::class, 'updateCompony'])->name('update');
+            Route::post('/search' , [SearchController::class , 'searchByCompony'])->name('searchByCompony');
+
+        });
+
         Route::prefix('/search')->name('search.')->group(function () {
 
             Route::get('/s1', [SearchController::class, 's1'])->name('s1');

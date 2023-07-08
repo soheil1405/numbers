@@ -20,6 +20,7 @@ class User extends Authenticatable
         'firstname',
         'lastname',
         'mobile',
+        'componyName',
         'mobile_verified_at',
     ];
 
@@ -27,14 +28,14 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-    
+
 
     public function rolation()
     {
         return $this->hasOne(user_roles::class);
     }
 
-    
+
     public function role()
     {
         return $this->hasOne(user_roles::class);

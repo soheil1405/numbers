@@ -3,52 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\names;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Morilog\Jalali\Jalalian;
 
-use Dompdf\Dompdf;
-
-// use Barryvdh\DomPDF\Facade\Pdf;
-// use mPDF;
-use niklasravnsborg\LaravelPdf\PdfWrapper;
-
+// // use mPDF;
 
 class SearchController extends Controller
 {
-
-
-
-
-
 
     public function submit(Request $request)
     {
         if ($request->secondName) {
             $request->validate([
                 'secondName' => 'required|regex:/^[a-zA-Z]+$/u',
-                'name' => 'required|regex:/^[a-zA-Z]+$/u'
+                'name' => 'required|regex:/^[a-zA-Z]+$/u',
             ]);
             $result = $this->searchEngin4($request);
             $files = $this->getFileNamesFromResult($result['output'], 's4');
 
-
         } elseif ($request->date2) {
             $request->validate([
                 'date1' => 'required',
-                'date2' => 'required'
+                'date2' => 'required',
             ]);
             $result = $this->searchEngin3($request);
-
-
 
             $files = $this->getFileNamesFromResult($result['output'], 's3');
         } elseif ($request->name && $request->family) {
             $request->validate([
                 'name' => 'required|regex:/^[a-zA-Z]+$/u',
-                'family' => 'required|regex:/^[a-zA-Z]+$/u'
+                'family' => 'required|regex:/^[a-zA-Z]+$/u',
             ]);
             $result = $this->searchEngin2($request);
 
@@ -56,8 +40,6 @@ class SearchController extends Controller
         } else {
 
             $result = $this->searchEngin1($request);
-
-
 
             $files = $this->getFileNamesFromResult($result['output'], 's1');
         }
@@ -68,11 +50,9 @@ class SearchController extends Controller
 
         $newData = implode($data);
 
-
         $headers = $files['headers'];
 
-        
-        return view('export.pdf', compact('newData', 'data', 'inputed' , 'headers'));
+        return view('export.pdf', compact('newData', 'data', 'inputed', 'headers'));
 
         // $pdf = Pdf::loadView('export.pdf', compact('newData'));
         // Pdf::setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
@@ -82,8 +62,7 @@ class SearchController extends Controller
 //         $html = '<!doctype html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
 
         //         $html .= '</head><body>';
-//         $html .= "<style> 
-
+//         $html .= "<style>
 
         // @font-face {
 //     font-family: IRANSansWeb_UltraLight;
@@ -108,7 +87,6 @@ class SearchController extends Controller
 //         <span style="font-family:\'Open Sans\'"> ' . $newData . ' </span> <br>          ';
 //         $html .= '</body></html>';
 
-
         //         // instantiate and use the dompdf class
 //         $dompdf = new Dompdf();
 //         $dompdf->loadHtml($html, 'UTF-8');
@@ -126,34 +104,26 @@ class SearchController extends Controller
 
     }
 
-
-
-
-
-
-
-    public function searchEngin1($request, $date = null)
+    public function searchEngin1($request, $date = null , $sex = null)
     {
         if ($date) {
+
             $date1 = $date;
             $inputShamsiDate = $date;
+            $sex = $sex;
+
         } else {
+
             $date1 = $request->date;
-
+            $sex = $request->sex;
             $inputShamsiDate = $request->date;
+
         }
-
-
-
 
         $manthShamsi = (int) substr($date1, 5, 2);
         $YearShamsi = ((((int) substr($date1, 0, 4)) - 1279) % 12) + 1;
 
-
         $date1 = $this->ExportDateAsShamsi($date1);
-
-
-
 
         $year = $this->getYear($date1);
 
@@ -168,10 +138,9 @@ class SearchController extends Controller
         $allSums = [
             0 => $yearSum,
             1 => $monthSum,
-            2 => $daySum
+            2 => $daySum,
 
         ];
-
 
         $stringMiladi = implode("-", $date1);
         $time = $this->getTodayDateTimeAsArray();
@@ -193,21 +162,16 @@ class SearchController extends Controller
         $RotationMonth = $this->getSumOfAll([$RotationYear['sum'], $thisMonth]);
         $RotationDay = $this->getSumOfAll([$RotationMonth['sum'], $thisDay]);
 
-
         $ipute = [
             'shamsi' => $date1,
             'miladi' => $stringMiladi,
         ];
 
-
-
-
-
         $output = [
             //f-1 shoma che kasi hastid
             'birthday' => ['sum' => $day, 'spc' => null, 'arr' => [$day]],
 
-            //f-2 rahnamaye entekhab shoghl 
+            //f-2 rahnamaye entekhab shoghl
             'monthShamsi' => ['sum' => $manthShamsi, 'spc' => null, 'arr' => [$manthShamsi]],
 
             //f-3 zoodyak chini
@@ -222,13 +186,13 @@ class SearchController extends Controller
             //f-6 neshaneh va namad adadi
             "yourNumber" => $adad_shoghli,
 
-            //f-7 afrad mashHoor 
+            //f-7 afrad mashHoor
             "yourPopularPerson" => $adad_shoghli,
 
             //f-8 nomarat mosbat va manfi az  tarikh tavalod shoma
             "positiveAndNegativeFromYourDate" => $adad_shoghli,
 
-            //f-9 behtarin herfe baraye shoma 
+            //f-9 behtarin herfe baraye shoma
             "yourBestJobs" => $adad_shoghli,
 
             //f-13 negaresh
@@ -244,27 +208,20 @@ class SearchController extends Controller
             //f-20 bedehi karmaei
             "DebtStatusFromDayOfBirthday" => $DebtStatusFromDayOfBirthday,
 
-
         ];
-
-
 
         $input = [
             'miladi' => $stringMiladi,
             'shamsi' => $inputShamsiDate,
         ];
 
-
         $data = ['output' => $output, "input" => $input];
 
         return $data;
     }
 
-
-
     protected function searchEngin2($request)
     {
-
 
         $name = $request->name;
         $family = $request->family;
@@ -273,16 +230,12 @@ class SearchController extends Controller
 
         $PersonalSum = $this->getNumberFromPersonalNameAndFamily($name, $family, 'personalNumberFromChars');
 
-
         $personalEnergy = $this->getSumOfAll([$SoulSum['sum'], $PersonalSum['sum']]);
-
-
 
         $input = [
             'name' => $name,
-            "family" => $family
+            "family" => $family,
         ];
-
 
         $output = [
             //f-10 potansiel va estedad shakhsi
@@ -298,31 +251,22 @@ class SearchController extends Controller
 
         $data = [
             'input' => $input,
-            "output" => $output
+            "output" => $output,
         ];
-
 
         return $data;
 
-
-
-
     }
-
-
 
     protected function searchEngin3($request)
     {
 
-
         $for1 = $this->searchEngin1($request, $request->date1);
         $for2 = $this->searchEngin1($request, $request->date2);
-
 
         $attitude1 = $for1['output']['attitudeStatusFromDayAndMonth'];
 
         $attitude2 = $for2['output']['attitudeStatusFromDayAndMonth'];
-
 
         $sum1 = $attitude1['sum'];
 
@@ -334,7 +278,6 @@ class SearchController extends Controller
             $SazOKar = $sum1 - $sum2;
         }
 
-
         $inputes = [
             'shamsi' => $for1['input']['shamsi'],
             'miladi' => $for1['input']['miladi'],
@@ -343,33 +286,23 @@ class SearchController extends Controller
             'miladi2' => $for2['input']['miladi'],
         ];
 
-
-
-
-
-
-
         $outPut = [
 
             //f-19 sazegari ejtemaei
             'SazOKar' => [
                 'sum' => $SazOKar,
                 'spc' => null,
-                'arr' => [$SazOKar]
-            ]
+                'arr' => [$SazOKar],
+            ],
         ];
-
 
         $date = ['input' => $inputes, 'output' => $outPut];
 
         return $date;
     }
 
-
     protected function searchEngin4($request)
     {
-
-
 
         $name = $request->name;
 
@@ -390,15 +323,12 @@ class SearchController extends Controller
             $StressSum = $first - $second;
         }
 
-
-
         $inputs = [
             'name' => $name,
             'secondName' => $secondName,
             'family' => $family,
-            'secondFamily' => $secondFamily
+            'secondFamily' => $secondFamily,
         ];
-
 
         $output = [
 
@@ -406,21 +336,19 @@ class SearchController extends Controller
             [
                 'sum' => $StressSum,
                 'spc' => null,
-                'arr' => [$StressSum]
-            ]
+                'arr' => [$StressSum],
+            ],
 
         ];
 
         $data = [
             'input' => $inputs,
-            'output' => $output
+            'output' => $output,
         ];
 
         return $data;
 
     }
-
-
 
     public function s1()
     {
@@ -436,16 +364,13 @@ class SearchController extends Controller
         return view('user.search.s3');
     }
 
-
     public function s4()
     {
         return view('user.search.s4');
     }
 
-
     public function searchName(Request $request)
     {
-
 
         $names = names::where('english_name', "LIKE", "%" . $request->name . "%")->where('type', $request->type)->get();
 
@@ -453,14 +378,10 @@ class SearchController extends Controller
 
     }
 
-
-
-
-    function getFileNamesFromResult($result, $sCount)
+    public function getFileNamesFromResult($result, $sCount)
     {
 
         $files = [];
-
 
         $headers = [];
 
@@ -482,16 +403,13 @@ class SearchController extends Controller
 
         }
 
-
         $outPut = [
             'headers' => $headers,
-            'files' => $files
+            'files' => $files,
         ];
 
         return $outPut;
     }
-
-
 
     public function arrayInputName($data, $persianName = null)
     {
@@ -509,6 +427,23 @@ class SearchController extends Controller
 
         return $string;
 
+    }
+
+    public function searchByCompony(Request $request)
+    {
+
+        $data = [];
+
+        $dates =$request->date;
+        $sexes = $request->sex;
+
+        for ($i=0; $i <  count($dates) ; $i++) {
+            array_push($data , $this->searchEngin1($request , $dates[$i+1] , $sexes[$i+1]));
+        }
+
+
+
+        dd($data);
     }
 
 }
