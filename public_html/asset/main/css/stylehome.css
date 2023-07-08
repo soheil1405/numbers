@@ -1,0 +1,154 @@
+:root {
+    --grad-color-admin: linear-gradient(to right, #141e30, #243b55);
+}
+
+@font-face {
+    font-family: IRANSansWeb_Medium;
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/eot/IRANSansWeb_Medium.eot');
+    src: url('../fonts/eot/IRANSansWeb_Medium.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url('../fonts/woff2/IRANSansWeb_Medium.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url('../fonts/woff/IRANSansWeb_Medium.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url('../fonts/ttf/IRANSansWeb_Medium.ttf') format('truetype');
+}
+
+.iransansmedium {
+    font-family: 'IRANSansWeb_Medium';
+}
+
+@font-face {
+    font-family: IRANSansWeb_Light;
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/eot/IRANSansWeb_Light.eot');
+    src: url('../fonts/eot/IRANSansWeb_Light.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url('../fonts/woff2/IRANSansWeb_Light.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url('../fonts/woff/IRANSansWeb_Light.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url('../fonts/ttf/IRANSansWeb_Light.ttf') format('truetype');
+}
+
+.iransanslight {
+    font-family: 'IRANSansWeb_Light';
+}
+
+@font-face {
+    font-family: IRANSansWeb_UltraLight;
+    font-style: normal;
+    font-weight: 200;
+    src: url('../fonts/eot/IRANSansWeb_UltraLight.eot');
+    src: url('../fonts/eot/IRANSansWeb_UltraLight.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url('../fonts/woff2/IRANSansWeb_UltraLight.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url('../fonts/woff/IRANSansWeb_UltraLight.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url('../fonts/ttf/IRANSansWeb_UltraLight.ttf') format('truetype');
+}
+
+.iransansultralight {
+    font-family: 'IRANSansWeb_UltraLight';
+}
+
+html,
+body {
+    height: 100%;
+    direction: rtl;
+    font-family: 'IRANSansWeb_UltraLight';
+}
+
+p {
+    margin: 0 0 15px;
+    color: #444;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'IRANSansWeb_Medium';
+    margin: 0 0 15px;
+    color: #444;
+    font-weight: 500;
+}
+
+h1 {
+    font-size: 48px;
+    line-height: 50px;
+}
+
+h2 {
+    font-size: 38px;
+    line-height: 40px;
+}
+
+h3 {
+    font-size: 30px;
+    line-height: 32px;
+}
+
+h4 {
+    font-size: 24px;
+    line-height: 26px;
+}
+
+h5 {
+    font-size: 20px;
+    line-height: 22px;
+}
+
+h6 {
+    font-size: 16px;
+    line-height: 20px;
+}
+
+a {
+    transition: all 0.3s ease 0s;
+    text-decoration: none;
+}
+
+.bg-admin {
+    background: var(--grad-color-admin);
+    /* fallback for old browsers */
+    /* background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2); */
+    /* Chrome 10-25, Safari 5.1-6 */
+    /* background: linear-gradient(to right, #4A00E0, #8E2DE2); */
+
+}
+
+.txt-white {
+    color: #fff;
+}
+
+div.nav a {
+    color: #fff;
+}
+
+.background-math {
+
+    background-image: url(/../asset/images/admin/pngtree-math-formulas-formula-mathematical-green-picture-image_1800562-min.jpg);
+
+
+}
+
+.divmain {
+    height: 100vh;
+}
+
+.headback {
+    background-color: #ffffffde;
+    padding: 30px;
+    margin: 20px 0px;
+}
+
+.pr-50 {
+    padding-right: 50px;
+}

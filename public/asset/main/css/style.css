@@ -1,0 +1,388 @@
+:root {
+    --grad-color-admin: linear-gradient(to right, #141e30, #243b55);
+    --text-color: #233953;
+}
+
+@font-face {
+    font-family: IRANSansWeb_Medium;
+    font-style: normal;
+    font-weight: 500;
+    src: url("../fonts/eot/IRANSansWeb_Medium.eot");
+    src: url("../fonts/eot/IRANSansWeb_Medium.eot?#iefix")
+            format("embedded-opentype"),
+        /* IE6-8 */ url("../fonts/woff2/IRANSansWeb_Medium.woff2")
+            format("woff2"),
+        /* FF39+,Chrome36+, Opera24+*/
+            url("../fonts/woff/IRANSansWeb_Medium.woff") format("woff"),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+            url("../fonts/ttf/IRANSansWeb_Medium.ttf") format("truetype");
+}
+
+.iransansmedium {
+    font-family: "IRANSansWeb_Medium";
+}
+
+@font-face {
+    font-family: IRANSansWeb_Light;
+    font-style: normal;
+    font-weight: 300;
+    src: url("../fonts/eot/IRANSansWeb_Light.eot");
+    src: url("../fonts/eot/IRANSansWeb_Light.eot?#iefix")
+            format("embedded-opentype"),
+        /* IE6-8 */ url("../fonts/woff2/IRANSansWeb_Light.woff2")
+            format("woff2"),
+        /* FF39+,Chrome36+, Opera24+*/
+            url("../fonts/woff/IRANSansWeb_Light.woff") format("woff"),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+            url("../fonts/ttf/IRANSansWeb_Light.ttf") format("truetype");
+}
+.navbar-collapse {
+    flex-grow: 0 !important;
+}
+
+.iransanslight {
+    font-family: "IRANSansWeb_Light";
+}
+
+@font-face {
+    font-family: IRANSansWeb_UltraLight;
+    font-style: normal;
+    font-weight: 200;
+    src: url("../fonts/eot/IRANSansWeb_UltraLight.eot");
+    src: url("../fonts/eot/IRANSansWeb_UltraLight.eot?#iefix")
+            format("embedded-opentype"),
+        /* IE6-8 */ url("../fonts/woff2/IRANSansWeb_UltraLight.woff2")
+            format("woff2"),
+        /* FF39+,Chrome36+, Opera24+*/
+            url("../fonts/woff/IRANSansWeb_UltraLight.woff") format("woff"),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+            url("../fonts/ttf/IRANSansWeb_UltraLight.ttf") format("truetype");
+}
+
+.iransansultralight {
+    font-family: "IRANSansWeb_UltraLight" !important;
+}
+
+th {
+    font-family: "IRANSansWeb_UltraLight" !important;
+}
+
+/* 
+.navbar-nav{
+    float:right !important;
+} */
+
+body {
+    background-image: url("/asset/images/bg.jpg");
+
+    background-size: cover;
+}
+
+.bg-admin {
+    /* height: 100%; */
+    direction: rtl;
+    font-family: "IRANSansWeb_UltraLight";
+    background-color: red;
+}
+
+p {
+    margin: 0 0 15px;
+    color: #444;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "IRANSansWeb_Medium" !important;
+    margin: 0 0 15px;
+    color: #444;
+    font-weight: 500;
+}
+
+h1 {
+    font-size: 48px;
+    line-height: 50px;
+}
+
+h2 {
+    font-size: 38px;
+    line-height: 40px;
+}
+
+h3 {
+    font-size: 30px;
+    line-height: 32px;
+}
+
+h4 {
+    font-size: 24px;
+    line-height: 26px;
+}
+
+h5 {
+    font-size: 20px;
+    line-height: 22px;
+}
+
+h6 {
+    font-size: 16px;
+    line-height: 20px;
+}
+
+a {
+    transition: all 0.3s ease 0s;
+    text-decoration: none;
+}
+
+.bg-admin {
+    background: var(--grad-color-admin);
+    /* fallback for old browsers */
+    /* background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2); */
+    /* Chrome 10-25, Safari 5.1-6 */
+    /* background: linear-gradient(to right, #4A00E0, #8E2DE2); */
+}
+
+.txt-white {
+    color: #fff;
+}
+
+div.nav a {
+    color: #fff;
+}
+
+.background-math {
+    /* background-image: url(/../../asset/images/admin/pngtree-math-formulas-formula-mathematical-green-picture-image_1800562-min.jpg); */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+.flex-item {
+    flex: 50%;
+}
+
+.bg-gif {
+    background-size: cover;
+    background-image: url(/../asset/images/7gnlfT.gif);
+    background-repeat: no-repeat;
+}
+
+.divmain {
+    height: 100vh;
+}
+
+.headback {
+    background-color: #ffffffde;
+    padding: 30px;
+    margin: 20px 0px;
+}
+
+.pr-50 {
+    padding-right: 50px;
+}
+
+.guest-head {
+    height: 10%;
+}
+
+.guest-body {
+    height: 90%;
+}
+
+.h-400px {
+    height: 400px;
+}
+
+.img-guest {
+    width: 150px;
+}
+
+.divgrid {
+    display: grid;
+    align-content: space-between;
+}
+
+.btn-first {
+    background: var(--grad-color-admin);
+    color: #fff;
+}
+
+.btn-first:hover {
+    color: #eee;
+    scale: 1.2;
+    transition: scale 0.8s;
+}
+
+.divvorod {
+    display: grid;
+    align-content: space-between;
+}
+
+.text-first {
+    color: var(--text-color);
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.bg-ef {
+    background-color: #efefef;
+}
+
+.Click-here {
+    cursor: pointer;
+    background-image: linear-gradient(190deg, #0080f8 0%, #40febf 100%);
+    color: #fff;
+    width: 120px;
+    text-align: center;
+    font-size: 16px;
+    padding: 10px 0;
+    margin: 0 auto;
+    transition: all 3s;
+}
+.Click-here:hover {
+    transition: all 3s;
+    background-image: linear-gradient(190deg, #40febf 0%, rgb(64, 64, 243) 100%);
+}
+.custom-model-main {
+    text-align: center;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0; /* z-index: 1050; */
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+    opacity: 0;
+    -webkit-transition: opacity 0.15s linear, z-index 0.15;
+    -o-transition: opacity 0.15s linear, z-index 0.15;
+    transition: opacity 0.15s linear, z-index 0.15;
+    z-index: -1;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.model-open {
+    z-index: 99999;
+    opacity: 1;
+    overflow: hidden;
+}
+.custom-model-inner {
+    -webkit-transform: translate(0, -25%);
+    -ms-transform: translate(0, -25%);
+    transform: translate(0, -25%);
+    -webkit-transition: -webkit-transform 0.3s ease-out;
+    -o-transition: -o-transform 0.3s ease-out;
+    transition: -webkit-transform 0.3s ease-out;
+    -o-transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+    display: inline-block;
+    vertical-align: middle;
+    width: 600px;
+    margin: 30px auto;
+    max-width: 97%;
+}
+.custom-model-wrap {
+    display: block;
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    background-clip: padding-box;
+    outline: 0;
+    text-align: left;
+    padding: 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+}
+.model-open .custom-model-inner {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0);
+    position: relative;
+    z-index: 999;
+}
+.model-open .bg-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 99;
+}
+.bg-overlay {
+    background: rgba(0, 0, 0, 0);
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    -webkit-transition: background 0.15s linear;
+    -o-transition: background 0.15s linear;
+    transition: background 0.15s linear;
+}
+.close-btn {
+    position: absolute;
+    right: 0;
+    top: -30px;
+    cursor: pointer;
+    z-index: 99;
+    font-size: 30px;
+    color: #fff;
+}
+
+@media screen and (min-width: 800px) {
+    .custom-model-main:before {
+        content: "";
+        display: inline-block;
+        height: auto;
+        vertical-align: middle;
+        margin-right: -0px;
+        height: 100%;
+    }
+}
+@media screen and (max-width: 799px) {
+    .custom-model-inner {
+        margin-top: 45px;
+    }
+}
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .active, .accordion:hover {
+    background-color: #ccc;
+  }
+  
+  /* Style the accordion panel. Note: hidden by default */
+  .panel {
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+  }

@@ -1,0 +1,230 @@
+:root {
+    --grad-color-admin: linear-gradient(to right, #141e30, #243b55);
+    --text-color: #233953;
+}
+
+@font-face {
+    font-family: IRANSansWeb_Medium;
+    font-style: normal;
+    font-weight: 500;
+    src: url("../fonts/eot/IRANSansWeb_Medium.eot");
+    src: url("../fonts/eot/IRANSansWeb_Medium.eot?#iefix")
+            format("embedded-opentype"),
+        /* IE6-8 */ url("../fonts/woff2/IRANSansWeb_Medium.woff2")
+            format("woff2"),
+        /* FF39+,Chrome36+, Opera24+*/
+            url("../fonts/woff/IRANSansWeb_Medium.woff") format("woff"),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+            url("../fonts/ttf/IRANSansWeb_Medium.ttf") format("truetype");
+}
+
+.iransansmedium {
+    font-family: "IRANSansWeb_Medium";
+}
+
+@font-face {
+    font-family: IRANSansWeb_Light;
+    font-style: normal;
+    font-weight: 300;
+    src: url("../fonts/eot/IRANSansWeb_Light.eot");
+    src: url("../fonts/eot/IRANSansWeb_Light.eot?#iefix")
+            format("embedded-opentype"),
+        /* IE6-8 */ url("../fonts/woff2/IRANSansWeb_Light.woff2")
+            format("woff2"),
+        /* FF39+,Chrome36+, Opera24+*/
+            url("../fonts/woff/IRANSansWeb_Light.woff") format("woff"),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+            url("../fonts/ttf/IRANSansWeb_Light.ttf") format("truetype");
+}
+.navbar-collapse {
+    flex-grow: 0 !important;
+}
+
+.iransanslight {
+    font-family: "IRANSansWeb_Light";
+}
+
+@font-face {
+    font-family: IRANSansWeb_UltraLight;
+    font-style: normal;
+    font-weight: 200;
+    src: url("../fonts/eot/IRANSansWeb_UltraLight.eot");
+    src: url("../fonts/eot/IRANSansWeb_UltraLight.eot?#iefix")
+            format("embedded-opentype"),
+        /* IE6-8 */ url("../fonts/woff2/IRANSansWeb_UltraLight.woff2")
+            format("woff2"),
+        /* FF39+,Chrome36+, Opera24+*/
+            url("../fonts/woff/IRANSansWeb_UltraLight.woff") format("woff"),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+            url("../fonts/ttf/IRANSansWeb_UltraLight.ttf") format("truetype");
+}
+
+.iransansultralight {
+    font-family: "IRANSansWeb_UltraLight" !important;
+}
+
+th {
+    font-family: "IRANSansWeb_UltraLight" !important;
+}
+
+/*
+.navbar-nav{
+    float:right !important;
+} */
+
+.bg-admin {
+    /* height: 100%; */
+    direction: rtl;
+    font-family: "IRANSansWeb_UltraLight";
+    background-color: red;
+}
+
+p {
+    margin: 0 0 15px;
+    color: #444;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "IRANSansWeb_Medium" !important;
+    margin: 0 0 15px;
+    color: #444;
+    font-weight: 500;
+}
+
+h1 {
+    font-size: 48px;
+    line-height: 50px;
+}
+
+h2 {
+    font-size: 38px;
+    line-height: 40px;
+}
+
+h3 {
+    font-size: 30px;
+    line-height: 32px;
+}
+
+h4 {
+    font-size: 24px;
+    line-height: 26px;
+}
+
+h5 {
+    font-size: 20px;
+    line-height: 22px;
+}
+
+h6 {
+    font-size: 16px;
+    line-height: 20px;
+}
+
+a {
+    transition: all 0.3s ease 0s;
+    text-decoration: none;
+}
+
+.bg-admin {
+    background: var(--grad-color-admin);
+    /* fallback for old browsers */
+    /* background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2); */
+    /* Chrome 10-25, Safari 5.1-6 */
+    /* background: linear-gradient(to right, #4A00E0, #8E2DE2); */
+}
+
+.txt-white {
+    color: #fff;
+}
+
+div.nav a {
+    color: #fff;
+}
+
+.background-math {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+.flex-item {
+    flex: 50%;
+}
+
+.bg-gif {
+    background-size: cover;
+    background-image: url(/../asset/images/7gnlfT.gif);
+    background-repeat: no-repeat;
+}
+
+.divmain {
+    height: 100vh;
+}
+
+.headback {
+    background-color: #ffffffde;
+    padding: 30px;
+    margin: 20px 0px;
+}
+
+.pr-50 {
+    padding-right: 50px;
+}
+
+.guest-head {
+    height: 10%;
+}
+
+.guest-body {
+    height: 90%;
+}
+
+.h-400px {
+    height: 400px;
+}
+
+.img-guest {
+    width: 150px;
+}
+
+.divgrid {
+    display: grid;
+    align-content: space-between;
+}
+
+.btn-first {
+    background: var(--grad-color-admin);
+    color: #fff;
+}
+
+.btn-first:hover {
+    color: #eee;
+    scale: 1.2;
+    transition: scale 0.8s;
+}
+
+.divvorod {
+    display: grid;
+    align-content: space-between;
+}
+
+.text-first {
+    color: var(--text-color);
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.bg-ef {
+    background-color: #efefef;
+}
