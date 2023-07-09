@@ -249,7 +249,11 @@ div.nav a {
 }
 .Click-here:hover {
     transition: all 3s;
-    background-image: linear-gradient(190deg, #40febf 0%, rgb(64, 64, 243) 100%);
+    background-image: linear-gradient(
+        190deg,
+        #40febf 0%,
+        rgb(64, 64, 243) 100%
+    );
 }
 .custom-model-main {
     text-align: center;
@@ -372,17 +376,76 @@ div.nav a {
     border: none;
     outline: none;
     transition: 0.4s;
-  }
-  
-  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-  .active, .accordion:hover {
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active,
+.accordion:hover {
     background-color: #ccc;
-  }
-  
-  /* Style the accordion panel. Note: hidden by default */
-  .panel {
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
     padding: 0 18px;
     background-color: white;
     display: none;
     overflow: hidden;
-  }
+}
+
+.overlay {
+    height: 0%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(65, 64, 64);
+    background-color: rgba(133, 151, 231, 0.9);
+    overflow-y: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 8%;
+    width: 100%;
+    /* text-align: center; */
+    margin-top: 0px;
+}
+
+.overlay a {
+    padding: 0px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #000000;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay a:hover,
+.overlay a:focus {
+    color: #f1f1f1;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 45px;
+}
+
+@media screen and (max-height: 450px) {
+    .overlay {
+        overflow-y: auto;
+    }
+
+    .overlay a {
+        font-size: 20px;
+    }
+
+    .overlay .closebtn {
+        font-size: 25px;
+        top: 10px;
+        right: 25px;
+    }
+}

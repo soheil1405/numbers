@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\orders;
 use App\Http\Requests\StoreordersRequest;
 use App\Http\Requests\UpdateordersRequest;
-use App\Models\setting;
-use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
 {
@@ -17,16 +15,10 @@ class OrdersController extends Controller
      */
     public function index()
     {
-
-        $orders = Auth::user()->orders;
-
-        $setting = setting::first();
-
-        return view('user.orders.index', compact('orders' , 'setting'));
-
+        //
     }
 
-    /**
+/**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -53,21 +45,9 @@ class OrdersController extends Controller
      * @param  \App\Models\orders  $orders
      * @return \Illuminate\Http\Response
      */
-    public function show($orders)
+    public function show(orders $orders)
     {
-
-        $order = orders::findOrFail($orders);
-
-        if ($order->user_id != Auth::user()->id) {
-
-            session()->flash('error', 'خطا');
-            return redirect()->route('user.routed.index');
-
-        }
-
-        $setting = setting::select('searchEnginOncePay', 'searchEnginMoreThanOne')->first();
-        return view('user.orders.show', compact('order', 'setting'));
-
+        //
     }
 
     /**

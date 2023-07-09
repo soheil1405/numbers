@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\payment;
 use App\Models\QuestionPay;
+use App\Models\setting;
 use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
@@ -20,30 +21,25 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function paymentPage()
-    {
-
-        $orders = Auth::user()->orders;
-
-        return view('user.payment.payment', compact('orders'));
-    }
-
+    
     protected function payment(Request $request)
     {
 
-        $pay = setting::first()->pay;
-
+        
         $userLastOrder = Orders::where('user_id', Auth::user()->id)->whereNull('marchant_id')->where('status', 0)->latest()->first();
-
+        
         if (is_null($userLastOrder)) {
             session()->flash('CustomError', "خطا");
             return redirect()->back();
         }
 
+
+        $pay = $userLastOrder->totalAmount;
+        
         $data = array(
             'MerchantID' => "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
             'Amount' => (int) $pay,
-            'CallbackURL' => route('payment.verify'),
+            'CallbackURL' => route('user.history'),
             'Description' => 'خرید تست',
 
         );
@@ -143,7 +139,7 @@ class Controller extends BaseController
         $payment->order_id = $orders->id;
 
         $payment->ref_id = $result['RefID'];
-        $payment->callback_url = route('payment.verify');
+        $payment->callback_url = route('user.history');
         $payment->totalAmount = $orders->totalAmount;
         $payment->status = $result['Status'];
 
@@ -152,10 +148,17 @@ class Controller extends BaseController
         $payment->save();
 
 
+        $orders->update([
+
+            'status'=>$result['Status']
+        ]);
 
         if ($err) {
             echo "cURL Error #:" . $err;
         } else {
+
+
+
             if ($result['Status'] == 100) {
 
                 $user = User::findOrFail($payment->user_id);
@@ -164,16 +167,17 @@ class Controller extends BaseController
 
                 session()->flash('CustomSuccess', 'پرداخت شما با موفقیت انجام شد و حساب کاربری شما شارز  شد');
 
-                return redirect()->route('payment.paymentPage');
+                return redirect()->route('user.history');
 
             } else {
 
 
+                
 
 
-                session()->flash('CustomError', 'عملیات پرداخت با شکست مواجه شد');
+                session()->flash('error', 'عملیات پرداخت با شکست مواجه شد');
 
-                return redirect()->route('payment.paymentPage');
+                return redirect()->route('user.orders.index');
 
             }
         }

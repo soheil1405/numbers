@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\names;
+use App\Models\orders;
+use App\Models\setting;
+use App\Models\user_searches;
+use \Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,6 +24,7 @@ class SearchController extends Controller
             ]);
             $result = $this->searchEngin4($request);
             $files = $this->getFileNamesFromResult($result['output'], 's4');
+            $searchEnginType = 's4';
 
         } elseif ($request->date2) {
             $request->validate([
@@ -29,6 +34,7 @@ class SearchController extends Controller
             $result = $this->searchEngin3($request);
 
             $files = $this->getFileNamesFromResult($result['output'], 's3');
+            $searchEnginType = 's3';
         } elseif ($request->name && $request->family) {
             $request->validate([
                 'name' => 'required|regex:/^[a-zA-Z]+$/u',
@@ -37,11 +43,15 @@ class SearchController extends Controller
             $result = $this->searchEngin2($request);
 
             $files = $this->getFileNamesFromResult($result['output'], 's2');
+
+            $searchEnginType = 's2';
         } else {
 
             $result = $this->searchEngin1($request);
 
             $files = $this->getFileNamesFromResult($result['output'], 's1');
+
+            $searchEnginType = 's1';
         }
 
         $inputed = $this->arrayInputName($result['input']);
@@ -52,7 +62,37 @@ class SearchController extends Controller
 
         $headers = $files['headers'];
 
-        return view('export.pdf', compact('newData', 'data', 'inputed', 'headers'));
+        $Arraydata = [
+            'data' => $data,
+            'headers' => $headers,
+            'inputed' => $inputed,
+            'sex' => $request->sex
+        ];
+
+        $user = Auth::user();
+
+
+
+        $totalAmount = setting::first()->searchEnginOncePay;
+
+
+
+
+        $order = orders::create([
+            'user_id' => $user->id,
+            'jsonData' => json_encode($Arraydata),
+            'totalAmount' => $totalAmount,
+            'status' => 0,
+            'resultCount' => 1,
+            'componyOrUserName' => $user->firstname . "-" . $user->lastname,
+            'ComponyOrUser' => 'u',
+            'searchEnginType' => $searchEnginType,
+        ]);
+
+
+
+
+        return redirect()->route('user.search.show', ['id' => $order->id]);
 
         // $pdf = Pdf::loadView('export.pdf', compact('newData'));
         // Pdf::setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
@@ -104,7 +144,7 @@ class SearchController extends Controller
 
     }
 
-    public function searchEngin1($request, $date = null , $sex = null)
+    public function searchEngin1($request, $date = null, $sex = null)
     {
         if ($date) {
 
@@ -220,11 +260,19 @@ class SearchController extends Controller
         return $data;
     }
 
-    protected function searchEngin2($request)
+    protected function searchEngin2($request, $name = null, $family = null)
     {
 
-        $name = $request->name;
-        $family = $request->family;
+        if (is_null($name)) {
+
+            $name = $request->name;
+        }
+
+        if (is_null($family)) {
+
+            $family = $request->family;
+
+        }
 
         $SoulSum = $this->getNumberFromPersonalNameAndFamily($name, $family, 'soulNumberFromChars');
 
@@ -432,18 +480,220 @@ class SearchController extends Controller
     public function searchByCompony(Request $request)
     {
 
-        $data = [];
 
-        $dates =$request->date;
+
+        $result = [];
+
+        $dates = $request->date;
         $sexes = $request->sex;
 
-        for ($i=0; $i <  count($dates) ; $i++) {
-            array_push($data , $this->searchEngin1($request , $dates[$i+1] , $sexes[$i+1]));
+
+        $setting = setting::first();
+
+        $user = Auth::user();
+
+        if (is_null($setting)) {
+            $totalAmount = count($dates) * (990000);
+        } else {
+
+            $totalAmount = count($dates) * ($setting->searchEnginMoreThanOne);
+        }
+
+
+        for ($i = 0; $i < count($dates); $i++) {
+            $data = $this->searchEngin1($request, $dates[$i + 1], $sexes[$i + 1]);
+            // dd($data);
+            $files = $this->getFileNamesFromResult($data['output'], 's1');
+
+            $inputed = $this->arrayInputName($data['input']);
+
+            $dataFromFiles = $this->getTextFromDocxFile($files['files']);
+
+            $headers = $files['headers'];
+
+            $Arraydata = [
+                'data' => $dataFromFiles,
+                'headers' => $headers,
+                'inputed' => $inputed,
+                'sex' => $sexes[$i + 1] == "a" ? "آقا" : "خانم",
+            ];
+
+            array_push($result, $Arraydata);
+        }
+        $order = orders::create([
+            'user_id' => $user->id,
+            'jsonData' => json_encode($result),
+            'totalAmount' => $totalAmount,
+            'status' => 0,
+            'resultCount' => count($dates),
+            'componyOrUserName' => $user->componyName,
+            'ComponyOrUser' => 'c',
+            'searchEnginType' => 's1',
+        ]);
+
+
+
+        return redirect()->route('user.orders.show', ['order' => $order]);
+    }
+
+
+
+
+
+    public function history()
+    {
+        $user = Auth::user();
+
+
+
+        $personalHistory = $user->personalHistory;
+
+
+        $orgHistory = $user->orgHistory;
+
+
+        $history = $personalHistory->merge($orgHistory);
+
+
+
+
+
+        return view('user.history.index', compact('history'));
+    }
+
+
+
+    public function show($orderId)
+    {
+
+        $order = orders::findOrFail($orderId);
+
+        $user = Auth::user();
+
+        if ($order->user_id != $user->id) {
+
+            session()->flash('CustomError', "خطا");
+            return back();
+        }
+
+
+        $dataaa = json_decode($order->jsonData, true);
+
+        if (array_key_exists('inputed', $dataaa)) {
+
+
+            $data = $dataaa['data'];
+            $inputed = $dataaa['inputed'];
+            $sex = $dataaa['sex'];
+            $headers = $dataaa['headers'];
+
+            return view('user.search.result.show', compact('data', 'order', 'inputed', 'sex', 'headers'));
+        }
+
+        if (count($dataaa) > 0) {
+            $data = $dataaa;
+
+            return view('user.search.result.componyList', compact('data', 'order'));
+        }
+
+
+    }
+
+    public function showItem($id, $index)
+    {
+
+        $order = orders::findOrFail($id);
+
+        $user = Auth::user();
+
+        if ($order->user_id != $user->id) {
+
+            session()->flash('CustomError', "خطا");
+            return back();
+        }
+
+
+        $arrData = json_decode($order->jsonData, true);
+        if (!array_key_exists($index, $arrData)) {
+            return abort(404);
         }
 
 
 
-        dd($data);
+
+        $inputed = $arrData[$index]['inputed'];
+
+        $headers = $arrData[$index]['headers'];
+        $data = $arrData[$index]['data'];
+
+
+        return view('user.search.result.show', compact('data', 'inputed', 'headers'));
+
+
     }
+
+
+
+    public function searchByCompony2(Request $request)
+    {
+
+        $names = $request->name;
+
+        $families = $request->family;
+        $sexes = $request->sex;
+
+
+        $setting = setting::first();
+
+        $user = Auth::user();
+
+        if (is_null($setting)) {
+            $totalAmount = count($names) * (990000);
+        } else {
+
+            $totalAmount = count($names) * ($setting->searchEnginMoreThanOne);
+        }
+
+
+        $data = [];
+
+        for ($i = 1; $i <= count($names); $i++) {
+
+            $result = $this->searchEngin2($request, $names[$i], $families[$i]);
+
+            $inputed = $this->arrayInputName($result['input']);
+
+            $files = $this->getFileNamesFromResult($result['output'], 's2');
+            $dataFromFiles = $this->getTextFromDocxFile($files['files']);
+
+            $headers = $files['headers'];
+
+            $Arraydata = [
+                'data' => $dataFromFiles,
+                'headers' => $headers,
+                'inputed' => $inputed,
+                'sex' => $sexes[$i] == "a" ? "آقا" : "خانم",
+            ];
+
+            array_push($data, $Arraydata);
+
+        }
+
+        $order = orders::create([
+            'user_id' => $user->id,
+            'jsonData' => json_encode($data),
+            'totalAmount' => $totalAmount,
+            'status' => 0,
+            'resultCount' => count($names),
+            'componyOrUserName' => $user->componyName,
+            'ComponyOrUser' => 'c',
+            'searchEnginType' => 's2',
+        ]);
+
+
+
+        return redirect()->route('user.orders.show', ['order' => $order]);
+    }
+
 
 }

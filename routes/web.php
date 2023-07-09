@@ -38,10 +38,10 @@ Route::get('/', [HomeLandController::class, 'home'])->name('home');
 
 Route::get('/test', function () {
 
-  $url =  url('public/main/fonts/ttf/');
+    $url = url('public/main/fonts/ttf/');
 
 
-  dd($url);
+    dd($url);
 });
 Route::prefix('/Auth')
 
@@ -95,13 +95,10 @@ Route::prefix('/admin-dashboard')
         Route::resource('/users', UserController::class);
         Route::resource('/names', NamesController::class);
         Route::resource('/user_searches', user_searches::class);
-        Route::resource('/orders', OrdersController::class);
+        Route::resource('/orders', \App\Http\Controllers\Admin\OrdersController::class);
         Route::resource('/payments', PaymentsController::class);
 
         Route::prefix('setting')->name('setting.')->group(function () {
-
-
-
 
             Route::get('/', [SettingControler::class, 'index'])->name('index');
 
@@ -131,11 +128,11 @@ Route::prefix('/user-dashboard')
         Route::get('/', [UserController::class, 'dashboard'])->name('panel');
 
 
-        Route::prefix('/compony')->name('compony.')->group(function(){
-
+        Route::prefix('/compony')->name('compony.')->group(function () {
             Route::get('/', [UserController::class, 'edtCompony'])->name('edit');
             Route::post('/update', [UserController::class, 'updateCompony'])->name('update');
-            Route::post('/search' , [SearchController::class , 'searchByCompony'])->name('searchByCompony');
+            Route::post('/s1', [SearchController::class, 'searchByCompony'])->name('searchByCompony');
+            Route::post('/s2', [SearchController::class, 'searchByCompony2'])->name('searchByCompony2');
 
         });
 
@@ -150,24 +147,31 @@ Route::prefix('/user-dashboard')
 
             Route::post('/submit', [SearchController::class, 'submit'])->name('submit');
 
+            
+            Route::prefix('/show/{id}')->group(function(){
+                
+                Route::get('/' , [SearchController::class , 'show'])->name('show');
+                Route::get('/{index}' , [SearchController::class , 'showItem'])->name('showItem');
+ 
+            });
+
+
         });
 
+        Route::resource('/orders', OrdersController::class);
+
+        Route::prefix('/payment')->name('payment.')->group(function () {
+            Route::post('/pay', [Controller::class, 'payment'])->name('pay');
+            Route::get('/PaymentVerify', [Controller::class, 'verifyy'])->name('verify');
+        });
+        Route::get('/history' , [SearchController::class , 'history'])->name('history');
     });
 
 
 
 
 
-Route::prefix('/payment')
-    ->middleware([isLogin::class])
-    ->name('payment.')
-    ->group(function () {
 
-        Route::get('/', [Controller::class, 'paymentPage'])->name('paymentPage');
-
-        Route::get('/PaymentPost', [Controller::class, 'payment'])->name('post');
-        Route::get('/PaymentVerify', [Controller::class, 'verifyy'])->name('verify');
-    });
 
 
 

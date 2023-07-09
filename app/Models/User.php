@@ -44,5 +44,20 @@ class User extends Authenticatable
     public function Payments(){
         return $this->hasMany(payment::class , 'user_id')->latest();
     }
+    public function orders(){
+        return $this->hasMany(orders::class , 'user_id')->latest();
+    }
+
+
+    public function orgHistory(){
+        return $this->hasMany(orders::class)->where('resultCount' , '>' , "1")->where('status' , '100')->latest();
+    }
+
+    public function personalHistory(){
+        return $this->hasMany(orders::class)->where('resultCount'  , "1")->latest();
+    }
+
+
+
 
 }

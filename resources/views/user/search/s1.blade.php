@@ -85,6 +85,7 @@
             <form id="searchByComponyForm" action="{{ route('user.compony.searchByCompony') }}" method="post">
                 @csrf
 
+                
                 @if (is_null(Auth::user()->componyName))
                     <h4 class="text-center ">
                         <a href="{{ route('user.compony.edit') }}" class="text-danger">
@@ -165,23 +166,27 @@
 
 
                     </div>
-
                     <span onclick="newInput()" class="btn btn-success"> افزودن </span>
                 @endif
+
 
                 <span onclick="confirmForm()" class="btn btn-success">
                     شروع جستجو
                 </span>
             </form>
         </div>
-
-
     </div>
     <form action="{{ route('user.search.submit') }}" method="post">
         @csrf
-        <input required value="{{ old('date') }}" name="date" data-jdp class="form-control">
-        <hr>
+        <div class="d-flex">
+            <input required value="{{ old('date') }}" name="date" data-jdp class="form-control">
+            <select class="form-control"  name="sex" id="">
+                <option value="a">آقا</option>
+                <option value="kh">خانم</option>
+            </select>
+        </div>
 
+        <hr>
 
         <div class="Click-here">
             تایید
@@ -278,7 +283,7 @@
 
                 new_div.appendChild(new_a);
                 var new_input = document.createElement('input');
-                newInput.name = "data[" + newCount + "]";
+                new_input.name = "dat[" + newCount + "]";
                 new_input.type = "text";
                 new_input.className = "form-control inputForTopCount";
 

@@ -54,10 +54,10 @@
 
 
                     <li class="nav-item iransansmedium">
-                        <a class="nav-link" href="{{ route('user.panel') }}">تاریخچه جستجو</a>
+                        <a class="nav-link" href="{{ route('user.history') }}">تاریخچه جستجو</a>
                     </li>
                     <li class="nav-item iransansmedium">
-                        <a class="nav-link" href="{{ route('user.panel') }}">تاریخچه پرداخت ها</a>
+                        <a class="nav-link" href="{{ route('user.orders.index') }}">تاریخچه پرداخت ها</a>
                     </li>
                     <li class="nav-item iransansmedium">
                         <a class="nav-link" href="{{ route('logout') }}">خروج</a>
