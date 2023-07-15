@@ -119,7 +119,7 @@
 
             <div
                 class="alert  col-md-2
-            @if (Auth::user()->s1CreditCount == 0) alert-danger @else alert-success @endif
+            @if (Auth::user()->s2CreditCount == 0) alert-danger @else alert-success @endif
                 
                 ">
                 <small class="text-center">
@@ -134,7 +134,7 @@
 
             <div
                 class="alert  col-md-2
-            @if (Auth::user()->s1CreditCount == 0) alert-danger @else alert-success @endif
+            @if (Auth::user()->s3CreditCount == 0) alert-danger @else alert-success @endif
                 
                 ">
                 <small class="text-center">
@@ -149,7 +149,7 @@
 
             <div
                 class="alert  col-md-2
-            @if (Auth::user()->s1CreditCount == 0) alert-danger @else alert-success @endif
+            @if (Auth::user()->s4CreditCount == 0) alert-danger @else alert-success @endif
                 
                 ">
                 <small class="text-center">
@@ -164,13 +164,13 @@
         </div>
 
 
-        <form action="" method="post">
-
+        <form action="{{route('user.payment.increaseCredit')}}" method="post">
+            @csrf
             <div class="d-flex">
 
                 <div class="" style="width: 30%;">
 
-                    <input type="number" class="form-control" style="" name="pay" min="2" id="">عدد
+                    <input required type="number" class="form-control" style="" name="pay" min="2" id="">عدد
                     
                     <small>
                         
@@ -228,7 +228,7 @@
                         </td>
 
                         <td>
-                            {{ $order->created_at }}
+                            {{ miladiToShamsi($order->created_at) }}
                         </td>
 
                         <td>
@@ -245,12 +245,12 @@
 
 
                         <td>
-                            {{ $order->searchEnginType }}
+                            {{ $order->searchType }}
                         </td>
 
                         <td>
-                            @if ($order->status == 100)
-                                <a href="" class="btn btn-success">موفق</a>
+                            @if ( $order->payment &&   $order->payment->status == (100 || 101) )
+                            <a href="{{route('user.search.show' , ['id'=>$order->id])}}" class="btn btn-success">موفق</a>
                             @else
                                 <span class="btn btn-danger">ناموفق</span>
                             @endif

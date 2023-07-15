@@ -20,6 +20,10 @@ class User extends Authenticatable
         'firstname',
         'lastname',
         'mobile',
+        's1CreditCount',
+        's2CreditCount' ,
+        's3CreditCount' ,
+        's4CreditCount',
         'componyName',
         'mobile_verified_at',
     ];
@@ -48,6 +52,15 @@ class User extends Authenticatable
         return $this->hasMany(orders::class , 'user_id')->latest();
     }
 
+    
+    public function SuccessPayed(){
+        return $this->hasMany(orders::class)->whereNotNull('marchant_id')->where('searchType' , '!=' , 'increaseCredit');
+    }
+
+
+    public function scopeNotFromCredit($query){
+        return $query->where('searchType' , '!=' , 'increaseCredit');
+   }
 
     public function orgHistory(){
         return $this->hasMany(orders::class)->where('resultCount' , '>' , "1")->where('status' , '100')->latest();

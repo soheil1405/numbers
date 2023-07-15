@@ -11,6 +11,17 @@
       'PDF' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
     ),
   ),
+  'hekmatinasser/verta' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Hekmatinasser\\Verta\\Laravel\\VertaServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Verta' => 'Hekmatinasser\\Verta\\Verta',
+    ),
+  ),
   'laravel/sail' => 
   array (
     'providers' => 

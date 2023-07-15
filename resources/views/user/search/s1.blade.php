@@ -70,7 +70,7 @@
 @endsection
 
 @section('content')
-    <h4 class="text-center p-4">موتور جستجوی اول</h4>
+    <h4 class="text-center p-4">موتور  آنالیزگر اول</h4>
     <h6> تاریخ تولد شما</h6>
     <hr>
 
@@ -283,7 +283,7 @@
 
                 new_div.appendChild(new_a);
                 var new_input = document.createElement('input');
-                new_input.name = "dat[" + newCount + "]";
+                new_input.name = "date[" + newCount + "]";
                 new_input.type = "text";
                 new_input.className = "form-control inputForTopCount";
 

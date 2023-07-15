@@ -28,6 +28,7 @@ class UserController extends Controller
 
 
 
+        
 
 
         $routeName = "users";
@@ -53,36 +54,25 @@ class UserController extends Controller
     {
 
         $user = User::findOrFail($user);
+        
+        $orders = $user->SuccessPayed;
+
+        $totalAmoutFromCompany = $orders->where('ComponyOrUser' , 'c')->sum('totlalAmout');
+        
+        $totalAmoutFromUsers = $orders->where('ComponyOrUser' , 'u')->sum('totlalAmout');
+        
+        $totalAmoutsSum = $orders->sum('totalAmount');
 
 
+        $SuccessSearchCount = $user->orders->where('ComponyOrUser' , 'u')->sum('resultCount');
 
-        if ($request->showBy) {
-            $variable = $request->showBy;
+        $SuccessSearchCountFromCompany = $user->orders->where('ComponyOrUser' , 'c')->whereNotNull('marchant_id');
 
-            switch ($variable) {
-                case 'all':
-                    $userAnswers = $user->userAnswers;
-                    break;
-                case 'currects':
-                    $userAnswers = $user->userCurrectAnswers;
-                    break;
 
-                case 'wrongs':
-                    $userAnswers = $user->userWrongAnswers;
-                    break;
+        $allSearchCount = $SuccessSearchCount + count($SuccessSearchCountFromCompany);
 
-                case 'wins':
-                    $userAnswers = $user->Winns;
-                    break;
-
-                default:
-                    # code...
-                    break;
-            }
-
-        }
-
-        return view('admin.users.show', compact('user'));
+        
+        return view('admin.users.show', compact('user' , 'allSearchCount' , 'totalAmoutsSum' , 'totalAmoutFromUsers'  ,'totalAmoutFromCompany'));
 
     }
 

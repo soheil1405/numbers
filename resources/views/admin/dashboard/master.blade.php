@@ -64,10 +64,10 @@
 
                     <li><a href="{{ route('adminn.orders.index') }}">تاریخچه پرداخت ها</a></li>
                     <li><a href="{{ route('adminn.setting.index') }}"> تنظیمات سایت</a></li>
-                    <li><a href="{{ route('adminn.setting.s1') }}"> تنظیمات موتور جستجوی اول</a></li>
-                    <li><a href="{{ route('adminn.setting.s2') }}"> تنظیمات موتور جستجوی دوم</a></li>
-                    <li><a href="{{ route('adminn.setting.s3') }}"> تنظیمات موتور جستجوی سوم</a></li>
-                    <li><a href="{{ route('adminn.setting.s4') }}"> تنظیمات موتور جستجوی چهارم</a></li>
+                    <li><a href="{{ route('adminn.setting.s1') }}"> تنظیمات موتور  آنالیزگر اول</a></li>
+                    <li><a href="{{ route('adminn.setting.s2') }}"> تنظیمات موتور  آنالیزگر دوم</a></li>
+                    <li><a href="{{ route('adminn.setting.s3') }}"> تنظیمات موتور  آنالیزگر سوم</a></li>
+                    <li><a href="{{ route('adminn.setting.s4') }}"> تنظیمات موتور  آنالیزگر چهارم</a></li>
 
                     <li><a href="{{ route('logout') }}">خروج</a></li>
 

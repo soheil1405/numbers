@@ -15,7 +15,7 @@
 @endsection
 
 @section('content')
-    <h4 class="text-center p-4">موتور جستجوی سوم</h4>
+    <h4 class="text-center p-4">موتور  آنالیزگر سوم</h4>
     <form action="{{ route('user.search.submit') }}" method="post">
 
         @csrf

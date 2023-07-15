@@ -8,13 +8,13 @@
 
 
 @section('title')
-    تنظیمات موتور جستجوی {{ $sCount }}
+    تنظیمات موتور  آنالیزگر {{ $sCount }}
 @endsection
 
 @section('content')
     <h4>
 
-        تنظیمات موتور جستجوی {{ $sCount }}
+        تنظیمات موتور  آنالیزگر {{ $sCount }}
 
     </h4>
 
@@ -44,7 +44,10 @@
 
                 <ul class="row">
                     @foreach (config('main.searchEngin' . $sCount)[$key] as $itemm => $item)
-                        <li class="col-2">
+
+                    {{-- @dd($itemm); --}}
+                    
+                    <li class="col-2">
 
                             <label for="{{ $key . '[' . $itemm . ']' }}">{{ $item }}</label>
                             
@@ -54,12 +57,10 @@
                                 id="{{ $key . '[' . $itemm . ']' }}" accept=".pdf">
 
 
-
-
-                                @if (file_exists(url(env('SEARCH_ENGIN_'.config('main.numberToEnglish')[$sCount]."_".$key).$item)))
+                                @if (Storage::disk('public')->exists("s".$sCount . "/" . $key . '/' . $itemm .".docx"))
 
                                 
-                                <a href="{{url(env('SEARCH_ENGIN_'.config('main.numberToEnglish')[$sCount]."_".$key).$item)}}">{{url(env('SEARCH_ENGIN_'.config('main.numberToEnglish')[$sCount]."_".$key).$item)}}</a>
+                                <a href="{{Storage::disk('public')->url("s".$sCount . "/" . $key . '/' . $itemm .".docx")}}">{{url(env('SEARCH_ENGIN_'.config('main.numberToEnglish')[$sCount]."_".$key).$item)}}</a>
 
                                 @else
 

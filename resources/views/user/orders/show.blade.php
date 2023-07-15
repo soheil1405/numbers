@@ -28,35 +28,13 @@
 
 
             <label for="">
-                نوع آنالیزگر : {{ $order->searchEnginType }}
+                @if ($order->searchType != 'increaseCredit')
+                    نوع آنالیزگر : {{ $order->searchType }}
+                @else
+                    افزایش حساب کاربری
+                @endif
             </label>
             <hr>
-
-            <label for="">
-                تعداد جسجتجو : {{ $order->resultCount }}
-            </label>
-            <hr>
-
-            <label for="">
-                مبلغ هر کدام :
-                <br>
-                برای اشخاص حقیقی
-                (
-                {{ $setting->searchEnginOncePay }}
-                )
-                ،
-                برای ارگانها ،شرکت ها و سازمان ها
-                (
-                {{ $setting->searchEnginMoreThanOne }}
-                )
-
-                ریال
-
-
-            </label>
-            <hr>
-
-
 
 
             <label for="">
@@ -73,7 +51,19 @@
                 تایید و پرداخت
             </span>
 
+
+
         </form>
+        @if (
+            $order->resultCount == 1 &&
+                $order->searchType != 'increaseCredit' &&
+                Auth::user()[$order->searchType . 'CreditCount'] > 0)
+            <form action="{{ route('user.payment.payFromCredit') }}" method="post">
+                @csrf
+                <input type="hidden" name="id" value="{{ $order->id }}">
+                <input class="btn btn-primary" type="submit" value="پرداخت از طریق کیف پول">
+            </form>
+        @endif
     </div>
 @endsection
 

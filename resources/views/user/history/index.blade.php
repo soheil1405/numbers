@@ -89,7 +89,7 @@
                                             {{ $item->resultCount }}
                                         </td>
                                         <td>
-                                            {{ $item->searchEnginType }}
+                                            {{ $item->searchType }}
                                         </td>
 
                                         <td>

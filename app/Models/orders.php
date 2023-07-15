@@ -12,4 +12,20 @@ class orders extends Model
 
     protected $guarded = [];
     protected $table = "orders";
+
+
+    public function payment(){
+        return $this->hasOne(payment::class , 'order_id' );
+    }
+
+
+
+
+
+
+    public function scopeUsersPays($query){
+        return $query->where('ComponyOrUser' , 'u');
+        
+    }
+
 }

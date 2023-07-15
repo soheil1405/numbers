@@ -17,7 +17,7 @@
 
 
 
-    <title>موتور جستجوی اول | @yield('title')</title>
+    <title>موتور  آنالیزگر اول | @yield('title')</title>
 
 
 </head>
@@ -37,19 +37,19 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0  ">
 
                     <li class="nav-item iransansmedium">
-                        <a class="nav-link" href="{{ route('user.search.s1') }}"> موتور جستجوی اول</a>
+                        <a class="nav-link" href="{{ route('user.search.s1') }}"> موتور  آنالیزگر اول</a>
                     </li>
 
                     <li class="nav-item iransansmedium">
-                        <a class="nav-link" href="{{ route('user.search.s2') }}"> موتور جستجوی دوم</a>
+                        <a class="nav-link" href="{{ route('user.search.s2') }}"> موتور  آنالیزگر دوم</a>
                     </li>
 
                     <li class="nav-item iransansmedium">
-                        <a class="nav-link" href="{{ route('user.search.s3') }}"> موتور جستجوی سوم</a>
+                        <a class="nav-link" href="{{ route('user.search.s3') }}"> موتور  آنالیزگر سوم</a>
                     </li>
 
                     <li class="nav-item iransansmedium">
-                        <a class="nav-link" href="{{ route('user.search.s4') }}"> موتور جستجوی چهارم</a>
+                        <a class="nav-link" href="{{ route('user.search.s4') }}"> موتور  آنالیزگر چهارم</a>
                     </li>
 
 

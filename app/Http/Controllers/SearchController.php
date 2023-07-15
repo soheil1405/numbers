@@ -23,8 +23,8 @@ class SearchController extends Controller
                 'name' => 'required|regex:/^[a-zA-Z]+$/u',
             ]);
             $result = $this->searchEngin4($request);
-            $files = $this->getFileNamesFromResult($result['output'], 's4');
-            $searchEnginType = 's4';
+            $files = $this->getFileNamesFromResult($result['output'], 's4', $request->sex);
+            $searchType = 's4';
 
         } elseif ($request->date2) {
             $request->validate([
@@ -33,8 +33,8 @@ class SearchController extends Controller
             ]);
             $result = $this->searchEngin3($request);
 
-            $files = $this->getFileNamesFromResult($result['output'], 's3');
-            $searchEnginType = 's3';
+            $files = $this->getFileNamesFromResult($result['output'], 's3', $request->sex);
+            $searchType = 's3';
         } elseif ($request->name && $request->family) {
             $request->validate([
                 'name' => 'required|regex:/^[a-zA-Z]+$/u',
@@ -42,34 +42,34 @@ class SearchController extends Controller
             ]);
             $result = $this->searchEngin2($request);
 
-            $files = $this->getFileNamesFromResult($result['output'], 's2');
+            $files = $this->getFileNamesFromResult($result['output'], 's2', $request->sex);
 
-            $searchEnginType = 's2';
+            $searchType = 's2';
         } else {
 
             $result = $this->searchEngin1($request);
 
-            $files = $this->getFileNamesFromResult($result['output'], 's1');
+            $files = $this->getFileNamesFromResult($result['output'], 's1', $request->sex);
 
-            $searchEnginType = 's1';
+            $searchType = 's1';
         }
 
         $inputed = $this->arrayInputName($result['input']);
 
-        $data = $this->getTextFromDocxFile($files['files']);
+        $data = $this->getTextFromDocxFile($files);
 
-        $newData = implode($data);
 
-        $headers = $files['headers'];
+        $headers = $data['headers'];
 
         $Arraydata = [
-            'data' => $data,
+            'data' => $data['files'],
             'headers' => $headers,
             'inputed' => $inputed,
             'sex' => $request->sex
         ];
 
         $user = Auth::user();
+
 
 
 
@@ -86,7 +86,7 @@ class SearchController extends Controller
             'resultCount' => 1,
             'componyOrUserName' => $user->firstname . "-" . $user->lastname,
             'ComponyOrUser' => 'u',
-            'searchEnginType' => $searchEnginType,
+            'searchType' => $searchType,
         ]);
 
 
@@ -202,6 +202,8 @@ class SearchController extends Controller
         $RotationMonth = $this->getSumOfAll([$RotationYear['sum'], $thisMonth]);
         $RotationDay = $this->getSumOfAll([$RotationMonth['sum'], $thisDay]);
 
+        $f17 = $this->f17($date1);
+
         $ipute = [
             'shamsi' => $date1,
             'miladi' => $stringMiladi,
@@ -245,6 +247,9 @@ class SearchController extends Controller
             //f-16 rahnamaye entekhabe tarikhe khas
             'RotationDay' => $RotationDay,
 
+            //f-17
+            "f17" => $f17,
+
             //f-20 bedehi karmaei
             "DebtStatusFromDayOfBirthday" => $DebtStatusFromDayOfBirthday,
 
@@ -256,6 +261,7 @@ class SearchController extends Controller
         ];
 
         $data = ['output' => $output, "input" => $input];
+
 
         return $data;
     }
@@ -302,6 +308,7 @@ class SearchController extends Controller
             "output" => $output,
         ];
 
+        // dd($data);
         return $data;
 
     }
@@ -426,37 +433,94 @@ class SearchController extends Controller
 
     }
 
-    public function getFileNamesFromResult($result, $sCount)
+    public function getFileNamesFromResult($result, $sCount, $sex)
     {
 
-        $files = [];
-
-        $headers = [];
 
         foreach ($result as $key => $value) {
 
-            array_push($headers, config('main.persianNames')[$key]);
 
-            $v = (string) (int) $value['sum'];
+            // $newfileDir = [];
 
-            $fielename = $sCount . "/" . $key . "/" . $v . ".docx";
+            if ($key == "f17" && $sCount == "s1") {
 
-            $path = Storage::disk('public')->path($fielename);
+                $f17files = [];
+
+                foreach ($value['sum'] as $keyy => $valuee) {
+                    if ($valuee === "+1") {
+
+                        $path1 = Storage::disk('public')->path($sCount . "/" . $key . '/' . $keyy . "/" . $valuee . ".docx");
+                        $path2 = Storage::disk('public')->path($sCount . "/" . $key . '/' . $keyy . '/' . "1.docx");
+                        if (file_exists($path1)) {
+                            array_push($f17files, $path1);
+                        }
+                        if (file_exists($path2)) {
+                            array_push($f17files, $path2);
+                        }
+                    } else {
+
+                        $path = Storage::disk('public')->path($sCount . "/" . $key . '/' . $keyy . "/" . $valuee . ".docx");
+                        if (file_exists($path)) {
+                            array_push($f17files, $path);
+                        }
+                    }
+                }
+                $items[$key] = $f17files;
+            } else {
+
+                $v = (string) (int) $value['sum'];
+
+
+                if ($key == "lifeWay") {
+                    $v = $v . $sex;
+                }
+
+                $fielename = $sCount . "/" . $key . "/" . $v . ".docx";
+                $path = Storage::disk('public')->path($fielename);
+
+
+                if (file_exists($path)) {
+                    $items[$key] = [$path];
+                }
+
+                if ($value['spc']) {
+
+                    $v = (string) (int) $value['spc'];
+
+
+                    if ($key == "lifeWay") {
+                        $v = $v . $sex;
+                    }
+
+                    $fielename = $sCount . "/" . $key . "/" . $v . ".docx";
+                    $path2 = Storage::disk('public')->path($fielename);
+
+                    if (file_exists($path2)) {
+                        $items[$key] = [$path, $path2];
+                    }
+                }
+
+
+
+
+
+
+
+            }
 
             // $path = public_path(env('SEARCH_ENGIN_'.config('main.numberToEnglish')[$sCount]."_".$key).$v);
 
-            if (file_exists($path)) {
-                array_push($files, $path);
-            }
+
 
         }
 
-        $outPut = [
-            'headers' => $headers,
-            'files' => $files,
-        ];
+        // dd($filekey);
 
-        return $outPut;
+
+
+
+
+        return $items;
     }
 
     public function arrayInputName($data, $persianName = null)
@@ -482,6 +546,8 @@ class SearchController extends Controller
 
 
 
+
+
         $result = [];
 
         $dates = $request->date;
@@ -503,16 +569,17 @@ class SearchController extends Controller
         for ($i = 0; $i < count($dates); $i++) {
             $data = $this->searchEngin1($request, $dates[$i + 1], $sexes[$i + 1]);
             // dd($data);
-            $files = $this->getFileNamesFromResult($data['output'], 's1');
+            $files = $this->getFileNamesFromResult($data['output'], 's1', $sexes[$i + 1]);
+
 
             $inputed = $this->arrayInputName($data['input']);
 
-            $dataFromFiles = $this->getTextFromDocxFile($files['files']);
+            $dataFromFiles = $this->getTextFromDocxFile($files);
 
-            $headers = $files['headers'];
+            $headers = $dataFromFiles['headers'];
 
             $Arraydata = [
-                'data' => $dataFromFiles,
+                'data' => $dataFromFiles['files'],
                 'headers' => $headers,
                 'inputed' => $inputed,
                 'sex' => $sexes[$i + 1] == "a" ? "آقا" : "خانم",
@@ -528,7 +595,7 @@ class SearchController extends Controller
             'resultCount' => count($dates),
             'componyOrUserName' => $user->componyName,
             'ComponyOrUser' => 'c',
-            'searchEnginType' => 's1',
+            'searchType' => 's1',
         ]);
 
 
@@ -642,6 +709,7 @@ class SearchController extends Controller
         $families = $request->family;
         $sexes = $request->sex;
 
+        
 
         $setting = setting::first();
 
@@ -663,13 +731,13 @@ class SearchController extends Controller
 
             $inputed = $this->arrayInputName($result['input']);
 
-            $files = $this->getFileNamesFromResult($result['output'], 's2');
-            $dataFromFiles = $this->getTextFromDocxFile($files['files']);
+            $files = $this->getFileNamesFromResult($result['output'], 's2', $sexes[$i]);
+            $dataFromFiles = $this->getTextFromDocxFile($files);
 
-            $headers = $files['headers'];
+            $headers = $dataFromFiles['headers'];
 
             $Arraydata = [
-                'data' => $dataFromFiles,
+                'data' => $dataFromFiles['files'],
                 'headers' => $headers,
                 'inputed' => $inputed,
                 'sex' => $sexes[$i] == "a" ? "آقا" : "خانم",
@@ -687,7 +755,7 @@ class SearchController extends Controller
             'resultCount' => count($names),
             'componyOrUserName' => $user->componyName,
             'ComponyOrUser' => 'c',
-            'searchEnginType' => 's2',
+            'searchType' => 's2',
         ]);
 
 

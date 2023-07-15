@@ -15,7 +15,7 @@
 @endsection
 
 @section('content')
-    <h4 class="text-center p-4">موتور جستجوی چهارم</h4>
+    <h4 class="text-center p-4">موتور  آنالیزگر چهارم</h4>
 
 
 

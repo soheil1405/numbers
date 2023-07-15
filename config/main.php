@@ -448,28 +448,33 @@ return [
 
 
     "persianNames" => [
-        'birthday' => 'فصل1-روز تولد_',
-        "monthShamsi" => 'فصل2-ماه شمسی(راهنمای انتخاب شغل)',
-        "YearShamsi" => 'فصل3-سال شمسی (زودیاک چینی و علاقمندی ها) ',
-        "lifeWay" => 'فصل4-مسیر سرنوشت',
-        "ProbablyHealthProblems" => 'فصل 5 -مشکلات احتمالی سلامتی',
-        "yourNumber" => 'فصل6-مفهوم و نشانه عددی',
-        "yourPopularPerson" => 'فصل7-افراد مشهور هم ارتعاش',
-        "positiveAndNegativeFromYourDate" => 'فصل8-تاثیرات مثبت و منفی ارتعاش عدد های تاریخ تولد',
-        "yourBestJobs" => 'فصل9-دیگر شغل ها و حرفه های متاسب',
-        "attitudeStatusFromDayAndMonth" => 'فصل13-نگرش',
-        "RotationYear" => 'فصل14-چرخش سال(تجربیات و چالش های 9 ساله)',
-        "RotationMonth" => 'فصل15-چرخش ماه(وظایف و درس های ماه شخصی)',
-        "RotationDay" => 'فصل16-چرخش روز(راهنمای انتخاب تاریخ خاص)',
+        'birthday' => 'روز تولد',
+        "monthShamsi" => 'ماه شمسی(راهنمای انتخاب شغل)',
+        "YearShamsi" => 'سال شمسی (زودیاک چینی و علاقمندی ها) ',
+        "lifeWay" => 'مسیر سرنوشت',
+        "ProbablyHealthProblems" => 'مشکلات احتمالی سلامتی',
+        "yourNumber" => 'مفهوم و نشانه عددی',
+        "yourPopularPerson"=>"افراد مشهور هم ارتعاش",
+        "yourPopularPeoples"=>"افراد مشهور هم ارتعاش",
+        "positiveAndNegativeFromYourBithday" => 'تاثیرات مثبت و منفی ارتعاش عدد های تاریخ تولد',
+        "positiveAndNegativeFromYourDate"=> 'تاثیرات مثبت و منفی ارتعاش عدد های تاریخ تولد',
+        "otherJobsForYou" => 'دیگر شغل ها و حرفه های متاسب',
+        "yourBestJobs" => 'دیگر شغل ها و حرفه های متاسب',
+        
+        "attitudeStatusFromDayAndMonth" => 'نگرش',
+        "RotationYear" => 'چرخش سال(تجربیات و چالش های 9 ساله)',
+        "RotationMonth" => 'چرخش ماه(وظایف و درس های ماه شخصی)',
+        "RotationDay" => 'چرخش روز(راهنمای انتخاب تاریخ خاص)',
         "DayNumberFromBirthday" => 'روز تولد',
         "DebtStatusFromDayOfBirthday" => 'بدهی کارمایی',
-        "personalEnergy"=>"فصل10-پتانسیل و استعداد طبیغی",
-        "soulNumnber" => 'فصل11-عدد روحی(رویا ها ،ارزو ها و خواسته های درونی)',
-        "personalNumber" => 'فصل12- شخصیت حقیقی',
-        "SazOKar" => 'فصل18-سازگاری دو نفره',
-        "StressSum" => 'فصل19-سازگاری کاری ،اجتماعی و روابط دوستانه(عدد استرس)',
+        "personalEnergy"=>"پتانسیل و استعداد طبیغی",
+        "f17"=>'حصوصیات  و صفاتی شحصی  (با بررسی تک تک اعداد تاریخ تولد )',
+        "soulNumnber" => 'عدد روحی(رویا ها ،ارزو ها و خواسته های درونی)',
+        "personalNumber" => ' شخصیت حقیقی',
+        "SazOKar" => 'سازگاری دو نفره',
+        "StressSum" => 'سازگاری کاری ،اجتماعی و روابط دوستانه(عدد استرس)',
 
-
+        
     ],
 
     "numberToEnglish" => [

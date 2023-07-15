@@ -150,13 +150,23 @@ class SettingControler extends Controller
     public function EditPdfs(Request $request)
     {
 
+        
+        dd($request->all());
         foreach ($request->except('_token') as $Reqkey => $ReqValue) {
             if (array_key_exists($Reqkey, config('main.searchEngin1'))) {
                 foreach ($ReqValue as $reqItemKey => $reqItemValue) {
-                    $path = url(public_path(env('SEARCH_ENGIN_ONE_' . $Reqkey) . $reqItemKey . ".pdf"));
-                    if (file_exists($path)) {
-                        unlink($path);
-                    }
+
+                    
+
+                    dd($Reqkey);
+
+                    Storage::disk('public')->path($Reqkey . "/" . $key . '/' . $keyy . "/" . $reqItemKey . ".docx");
+    
+                    // $path = url(public_path(env('SEARCH_ENGIN_ONE_' . $Reqkey) . $reqItemKey . ".pdf"));
+                
+                    // if (file_exists($path)) {
+                    //     unlink($path);
+                    // }
                     $reqItemValue->move(public_path(env('SEARCH_ENGIN_ONE_' . $Reqkey), $reqItemKey . ".pdf"));
                 }
             }
