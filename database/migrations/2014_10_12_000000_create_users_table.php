@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('firstname');
             $table->string('lastname');
 
+            $table->string('componyName');
             $table->string('mobile')->unique();
             $table->timestamp('mobile_verified_at')->nullable();
             $table->timestamps();

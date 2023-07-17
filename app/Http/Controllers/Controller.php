@@ -511,19 +511,17 @@ class Controller extends BaseController
 
             foreach ($f as $header => $filename) {
 
-
-
                 $striped_content = '';
+              
                 $content = '';
 
                 if (!$filename || !file_exists($filename)) {
-
-
+                    
                     return false;
-
 
                 }
 
+                
                 $zip = zip_open($filename);
 
 
@@ -545,6 +543,7 @@ class Controller extends BaseController
 
 
                 zip_close($zip);
+
                 $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
                 $content = str_replace('</w:r></w:p>', "\r\n", $content);
                 $striped_content = strip_tags($content);
