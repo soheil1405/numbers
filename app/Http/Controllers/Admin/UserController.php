@@ -15,6 +15,7 @@ use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Morilog\Jalali\Jalalian;
 use App\Models\auth\authverifyEmail;
 
@@ -28,18 +29,22 @@ class UserController extends Controller
 
 
 
-        
+
 
 
         $routeName = "users";
 
 
         $headers = [
-            "کد کاربری" , "نام"  ,  "شماره تلفن" ,"تاریخ عضویت" , "عملیات"
-        ]    ;
+            "کد کاربری",
+            "نام",
+            "شماره تلفن",
+            "تاریخ عضویت",
+            "عملیات"
+        ];
 
 
-        return view('admin.pages.index', compact('items' , 'routeName' , 'headers'));
+        return view('admin.pages.index', compact('items', 'routeName', 'headers'));
 
     }
 
@@ -54,25 +59,25 @@ class UserController extends Controller
     {
 
         $user = User::findOrFail($user);
-        
+
         $orders = $user->SuccessPayed;
 
-        $totalAmoutFromCompany = $orders->where('ComponyOrUser' , 'c')->sum('totlalAmout');
-        
-        $totalAmoutFromUsers = $orders->where('ComponyOrUser' , 'u')->sum('totlalAmout');
-        
+        $totalAmoutFromCompany = $orders->where('ComponyOrUser', 'c')->sum('totlalAmout');
+
+        $totalAmoutFromUsers = $orders->where('ComponyOrUser', 'u')->sum('totlalAmout');
+
         $totalAmoutsSum = $orders->sum('totalAmount');
 
 
-        $SuccessSearchCount = $user->orders->where('ComponyOrUser' , 'u')->sum('resultCount');
+        $SuccessSearchCount = $user->orders->where('ComponyOrUser', 'u')->sum('resultCount');
 
-        $SuccessSearchCountFromCompany = $user->orders->where('ComponyOrUser' , 'c')->whereNotNull('marchant_id');
+        $SuccessSearchCountFromCompany = $user->orders->where('ComponyOrUser', 'c')->whereNotNull('marchant_id');
 
 
         $allSearchCount = $SuccessSearchCount + count($SuccessSearchCountFromCompany);
 
-        
-        return view('admin.users.show', compact('user' , 'allSearchCount' , 'totalAmoutsSum' , 'totalAmoutFromUsers'  ,'totalAmoutFromCompany'));
+
+        return view('admin.users.show', compact('user', 'allSearchCount', 'totalAmoutsSum', 'totalAmoutFromUsers', 'totalAmoutFromCompany'));
 
     }
 
@@ -238,7 +243,8 @@ class UserController extends Controller
     }
 
 
-    public function edtCompony(Request $request){
+    public function edtCompony(Request $request)
+    {
 
 
         $user = Auth::user();
@@ -252,10 +258,11 @@ class UserController extends Controller
     }
 
 
-    public function updateCompony(Request $request){
+    public function updateCompony(Request $request)
+    {
 
         $request->validate([
-            'componyName'=>'required'
+            'componyName' => 'required'
         ]);
 
 
@@ -263,12 +270,12 @@ class UserController extends Controller
 
 
         $user->update([
-           'componyName'=>$request->componyName
+            'componyName' => $request->componyName
         ]);
 
 
 
-        
+
         session()->flash('edited', 'شرکت شما با موفقیت ورایش شد');
 
         return redirect()->back();
@@ -276,4 +283,29 @@ class UserController extends Controller
     }
 
 
+    public function customerClub()
+    {
+        $files = Storage::allFiles(env('CUSTOMER_CLUB_FILES'));
+
+
+
+        
+        $array = [];
+
+        foreach ($files as $file) {
+            array_push($array ,  Storage::path($file));
+        }
+
+        
+        $data = $this->getTextFromDocxFileWithoutHeaders($array);
+
+
+        
+        $user = Auth::user();
+
+        
+        
+        
+        return view('user.customerClub', compact('files', 'user' , 'data'));
+    }
 }

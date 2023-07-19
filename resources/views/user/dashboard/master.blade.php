@@ -54,6 +54,10 @@
 
 
                     <li class="nav-item iransansmedium">
+                        <a class="nav-link" href="{{ route('user.customerClub') }}"> باشگاه مشتریان</a>
+                    </li>
+
+                    <li class="nav-item iransansmedium">
                         <a class="nav-link" href="{{ route('user.history') }}">تاریخچه جستجو</a>
                     </li>
                     <li class="nav-item iransansmedium">

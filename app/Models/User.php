@@ -26,6 +26,7 @@ class User extends Authenticatable
         's4CreditCount',
         'componyName',
         'mobile_verified_at',
+        'isIncustomerClub',
     ];
 
     protected $hidden = [

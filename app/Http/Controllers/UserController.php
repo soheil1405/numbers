@@ -14,10 +14,13 @@ use Hekmatinasser\Verta\Laravel\JalaliValidator;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Morilog\Jalali\Jalalian;
 use App\Models\auth\authverifyEmail;
 
 
 class UserController extends Controller
 {
+
+
 }

@@ -161,19 +161,25 @@ class Controller extends BaseController
             if ($result['Status'] == 100) {
                 $user = User::findOrFail($payment->user_id);
                 if ($orders->searchType == "increaseCredit") {
-                 
+
                     $setting = setting::first();
 
                     $firstpay = $setting->searchEnginOncePay;
 
-                    $count = ($orders->totalAmount)/$firstpay;
-                 
+                    $count = ($orders->totalAmount) / $firstpay;
+
                     $user->update([
                         's1CreditCount' => ($user->s1CreditCount + $count),
                         's2CreditCount' => ($user->s2CreditCount + $count),
                         's3CreditCount' => ($user->s3CreditCount + $count),
                         's4CreditCount' => ($user->s4CreditCount + $count),
                     ]);
+                } else {
+                    if ($user->isIncustomerClub < 3) {
+                        $user->update([
+                            'isIncustomerClub' => ($user->isIncustomerClub) + 1
+                        ]);
+                    }
                 }
 
                 session()->flash('CustomSuccess', 'پرداخت شما با موفقیت انجام شد و حساب کاربری شما شارز  شد');
@@ -507,21 +513,21 @@ class Controller extends BaseController
 
         $data = [];
         foreach ($filenameArr as $fasl => $f) {
-            array_push($headers , $fasl);
+            array_push($headers, $fasl);
 
             foreach ($f as $header => $filename) {
 
                 $striped_content = '';
-              
+
                 $content = '';
 
                 if (!$filename || !file_exists($filename)) {
-                    
+
                     return false;
 
                 }
 
-                
+
                 $zip = zip_open($filename);
 
 
@@ -552,11 +558,11 @@ class Controller extends BaseController
                 if (array_key_exists($fasl, $dataaa)) {
 
                     // dd($dataaa[$fasl]);
-                    $dataaa[$fasl] = array_merge($dataaa[$fasl] ,  [$striped_content]);
+                    $dataaa[$fasl] = array_merge($dataaa[$fasl], [$striped_content]);
 
-                }else{
+                } else {
 
-                    $dataaa[$fasl] =[ $striped_content];
+                    $dataaa[$fasl] = [$striped_content];
                 }
 
 
@@ -578,13 +584,13 @@ class Controller extends BaseController
         }
 
 
-        
+
         $output = [
             'headers' => $headers,
             'files' => $dataaa
         ];
 
-        
+
 
         return $output;
 
@@ -592,6 +598,93 @@ class Controller extends BaseController
 
     }
 
+    protected function getTextFromDocxFileWithoutHeaders($filenameArr)
+    {
+
+
+
+        $headers = [];
+
+        $dataaa = [];
+
+        $data = [];
+        foreach ($filenameArr as $filename) {
+
+
+
+
+            $striped_content = '';
+
+            $content = '';
+
+            if (!$filename || !file_exists($filename)) {
+
+                return false;
+
+            }
+
+
+            $zip = zip_open($filename);
+
+
+
+            if (!$zip || is_numeric($zip)) {
+
+                return false;
+
+            }
+            while ($zip_entry = zip_read($zip)) {
+                if (zip_entry_open($zip, $zip_entry) == FALSE)
+                    continue;
+                if (zip_entry_name($zip_entry) != "word/document.xml")
+                    continue;
+                $content .= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+                zip_entry_close($zip_entry);
+            } // end while  
+
+
+
+            zip_close($zip);
+
+            $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
+            $content = str_replace('</w:r></w:p>', "\r\n", $content);
+            $striped_content = strip_tags($content);
+
+            $striped_content = str_replace("\r" , "<br/>" , $striped_content);
+
+            $striped_content = str_replace("\n" , "<br/>" , $striped_content);
+            
+
+            array_push($dataaa, $striped_content);
+
+            
+
+            // return $striped_content;
+
+            $filename = "sample.docx"; // or /var/www/html/file.docx  
+            // $content = read_file_docx($filename);
+
+            if ($content !== false) {
+
+                // array_push($data , $content);
+
+                // echo nl2br($content);
+            }
+
+
+
+        }
+
+
+
+
+
+
+        return $dataaa;
+
+
+
+    }
 
 
     public function increaseCredit(Request $request)
@@ -642,8 +735,8 @@ class Controller extends BaseController
         }
 
         $order->update([
-            'status' => 100 ,
-            'marchant_id'=>'payFromCredit' 
+            'status' => 100,
+            'marchant_id' => 'payFromCredit'
         ]);
 
 

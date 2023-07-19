@@ -164,27 +164,48 @@
         </div>
 
 
-        <form action="{{route('user.payment.increaseCredit')}}" method="post">
+        <form action="{{ route('user.payment.increaseCredit') }}" method="post">
             @csrf
             <div class="d-flex">
 
-                <div class="" style="width: 30%;">
+                <div class="" style="display:flex; width:100%;">
 
-                    <input required type="number" class="form-control" style="" name="pay" min="2" id="">عدد
-                    
+                    <input required type="number" class="form-control" style="width: 20%;"  style="" name="pay" min="2"
+                        id="">عدد
+
+                        <input class="btn btn-success" type="submit" value="افزایش موحودی">
                     <small>
-                        
-                        قیمت هر بار جستجو ({{ $setting->searchEnginOncePay }})
-                        
+                        قیمت هر شارژحساب کاربری ({{ $setting->searchEnginOncePay }})تومان
                     </small>
-                </div>
 
-                <input class="btn btn-success" type="submit" value="افزایش موحودی">
+                </div>
 
             </div>
 
 
         </form>
+
+
+        @if (Auth::user()->isIncustomerClub == 3)
+
+        <div class="alert alert-success">
+
+            شما عضو باشگاه مشتریان هستید  &#x1F60D;
+
+            <a href="{{route('user.customerClub')}}">مزایای عضویت در باشگاه مشتریان</a>
+
+        </div>
+        
+        @else
+
+        <div class="alert alert-danger">
+            درصورتی که شما 3 آنالیز دیگر در سایت انجام دهید ، عضو باشگاه مشتریان خواهید شد
+            
+            
+            <a href="{{route('user.customerClub')}}">مزایای عضویت در باشگاه مشتریان</a>
+        </div>
+        @endif
+
 
         <table class="table table-hover table-striped table-bordered text-center">
             <thead>
@@ -249,8 +270,9 @@
                         </td>
 
                         <td>
-                            @if ( $order->payment &&   $order->payment->status == (100 || 101) )
-                            <a href="{{route('user.search.show' , ['id'=>$order->id])}}" class="btn btn-success">موفق</a>
+                            @if ($order->payment && $order->payment->status == (100 || 101))
+                                <a href="{{ route('user.search.show', ['id' => $order->id]) }}"
+                                    class="btn btn-success">موفق</a>
                             @else
                                 <span class="btn btn-danger">ناموفق</span>
                             @endif

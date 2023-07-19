@@ -147,12 +147,12 @@ Route::prefix('/user-dashboard')
 
             Route::post('/submit', [SearchController::class, 'submit'])->name('submit');
 
-            
-            Route::prefix('/show/{id}')->group(function(){
-                
-                Route::get('/' , [SearchController::class , 'show'])->name('show');
-                Route::get('/{index}' , [SearchController::class , 'showItem'])->name('showItem');
- 
+
+            Route::prefix('/show/{id}')->group(function () {
+
+                Route::get('/', [SearchController::class, 'show'])->name('show');
+                Route::get('/{index}', [SearchController::class, 'showItem'])->name('showItem');
+
             });
 
 
@@ -162,14 +162,19 @@ Route::prefix('/user-dashboard')
 
         Route::prefix('/payment')->name('payment.')->group(function () {
             Route::post('/pay', [Controller::class, 'payment'])->name('pay');
-            
+
             Route::post('/payFromCredit', [Controller::class, 'payFromCredit'])->name('payFromCredit');
 
-            
+
             Route::get('/PaymentVerify', [Controller::class, 'verifyy'])->name('verify');
-            Route::post('/increaseCredit' , [Controller::class ,'increaseCredit'])->name('increaseCredit');
+            Route::post('/increaseCredit', [Controller::class, 'increaseCredit'])->name('increaseCredit');
         });
-        Route::get('/history' , [SearchController::class , 'history'])->name('history');
+        Route::get('/history', [SearchController::class, 'history'])->name('history');
+
+
+        Route::get('/customerClub', [UserController ::class, 'customerClub'])->name('customerClub');
+
+
     });
 
 
