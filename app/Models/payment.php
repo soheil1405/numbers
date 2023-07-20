@@ -11,8 +11,8 @@ class payment extends Model
     protected $guarded = [];
 
 
-    public function order (){
-        return $this->hasOne(Orders::class , 'payment_id');
+    public function order(){
+        return $this->hasOne(Orders::class );
     }
 
 

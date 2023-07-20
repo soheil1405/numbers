@@ -27,6 +27,9 @@
 
                     @case('names')
                         <x-names :trs="$trs" />
+                        
+                    @case('orders')
+                    <x-orders :trs="$trs" />
                     @break
 
                     @default

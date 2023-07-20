@@ -94,6 +94,7 @@ return [
     
     
     
+    'orders'=>'تاریخچه پرداخت ها',
     'names' => 'لیست اسم ها',
     'persian_name_label' => 'اسم فارسی',
     'english_name_label' => 'اسم انگلیسی',

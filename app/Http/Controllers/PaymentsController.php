@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\orders;
 use App\Models\payments;
 use App\Http\Requests\StorepaymentsRequest;
 use App\Http\Requests\UpdatepaymentsRequest;
+
+use Illuminate\Http\Request;
+use Spatie\FlareClient\View;
 
 class PaymentsController extends Controller
 {
@@ -13,9 +17,10 @@ class PaymentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+
     }
 
     /**

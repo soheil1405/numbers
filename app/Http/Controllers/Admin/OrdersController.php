@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\orders;
 use App\Http\Requests\StoreordersRequest;
 use App\Http\Requests\UpdateordersRequest;
+use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
@@ -14,12 +15,51 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $showBy = $request->showBy;
+        $items = orders::when($request->showBy, function ($query) use ($showBy) {
+
+            switch ($showBy) {
+                case 'company':
+                    return $query->where('ComponyOrUser', 'c');
+                    break;
+
+                case 'user':
+                    return $query->where('ComponyOrUser', 'u');
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+
+        })->whereNotNull('marchant_id')->latest()->paginate(50);
+
+        // dd($items[0]);
+
+
+        $headers = [
+            'کد سفارش',
+            'ref_id',
+            'ارگان / شخص',
+            'نام پرداخت کننده',
+            'نوع پرداخت',
+            'تعداد پرداخت',
+            'مبلغ پرداخت',
+            'تاریخ پرداخت'
+        ];
+
+
+        $routeName = "orders";
+
+
+
+        return view('admin.pages.index', compact('items', 'headers', 'routeName'));
+
     }
 
-/**
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

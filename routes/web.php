@@ -95,8 +95,8 @@ Route::prefix('/admin-dashboard')
         Route::resource('/users', UserController::class);
         Route::resource('/names', NamesController::class);
         Route::resource('/user_searches', user_searches::class);
+
         Route::resource('/orders', \App\Http\Controllers\Admin\OrdersController::class);
-        Route::resource('/payments', PaymentsController::class);
 
         Route::prefix('setting')->name('setting.')->group(function () {
 
@@ -172,7 +172,7 @@ Route::prefix('/user-dashboard')
         Route::get('/history', [SearchController::class, 'history'])->name('history');
 
 
-        Route::get('/customerClub', [UserController ::class, 'customerClub'])->name('customerClub');
+        Route::get('/customerClub', [UserController::class, 'customerClub'])->name('customerClub');
 
 
     });

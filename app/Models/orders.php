@@ -28,4 +28,10 @@ class orders extends Model
         
     }
 
+
+    public function scopeHasPayment($query){
+        if(!is_null($this->payment)){
+            return $query;
+        }
+    }
 }

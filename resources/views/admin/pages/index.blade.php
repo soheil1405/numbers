@@ -16,7 +16,8 @@
         افزودن
     </a>
 
-    <x-tables :trs="$items" :title="config('main.' . $routeName) . count($items)" :routeName="$routeName" :headers="$headers" />
+    <x-tables :trs="$items" :title="config('main.' . $routeName) . '('. count($items) . ')'" :routeName="$routeName" :headers="$headers" />
+
 
 
 
